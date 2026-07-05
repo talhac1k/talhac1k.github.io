@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ============ SEO ============ -->
+<title>Talha Çelik — AI Agents, RAG & Data Science</title>
+<meta name="description" content="Talha Çelik — Computer Science & Economics graduate building AI agents, RAG pipelines, and automation. Based in Eindhoven, Netherlands. Open to work and collaborations.">
+<meta name="author" content="Talha Çelik">
+<link rel="canonical" href="https://talhac1k.github.io/">
+
+<!-- Open Graph / LinkedIn / social previews -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Talha Çelik — AI Agents, RAG & Data Science">
+<meta property="og:description" content="CS & Economics graduate turning ideas into intelligent systems. AI agents · RAG pipelines · Automation.">
+<meta property="og:url" content="https://talhac1k.github.io/">
+<meta name="twitter:card" content="summary">
+
+<!-- Favicon: the tç. mark -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23faf8f4'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='30' text-anchor='middle' fill='%231f1d1a'%3Etç%3Ctspan fill='%23b8543a'%3E.%3C/tspan%3E%3C/text%3E%3C/svg%3E">
+
+<!-- Structured data for search engines -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Talha Çelik",
+  "jobTitle": "AI & Data Science",
+  "email": "mailto:celikt2002@gmail.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Eindhoven", "addressCountry": "NL" },
+  "alumniOf": "Leiden University",
+  "sameAs": [
+    "https://github.com/talhac1k",
+    "https://www.linkedin.com/in/talha-%C3%A7elik-608011233/"
+  ]
+}
+</script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============ TOKENS ============ */
+:root {
+  --bg: #faf8f4;
+  --ink: #1f1d1a;
+  --ink-soft: #45413b;
+  --ink-mute: #6b6660;
+  --ink-faint: #a49e94;
+  --accent: #b8543a;
+  --line: #e2dcd2;
+  --line-soft: #e9e4da;
+  --chip-border: #d8d2c8;
+  --green: #4a9a6a;
+  --serif: 'Newsreader', Georgia, serif;
+  --sans: 'Space Grotesk', -apple-system, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --pad-x: 64px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: rgba(184, 84, 58, 0.18); }
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+.shell {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+
+/* ============ NAV ============ */
+header {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px var(--pad-x);
+  background: rgba(250, 248, 244, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.brand {
+  font: 600 18px var(--sans);
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  background: none; border: none; color: var(--ink);
+}
+.brand .dot { color: var(--accent); }
+nav { display: flex; gap: 32px; font: 500 13.5px var(--sans); }
+nav a {
+  cursor: pointer; padding-bottom: 3px;
+  color: var(--ink-mute); text-decoration: none;
+  border-bottom: 1.5px solid transparent;
+  transition: color 0.15s;
+}
+nav a:hover, nav a:focus-visible { color: var(--ink); }
+nav a.active { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* ============ PAGES ============ */
+main { flex: 1; }
+.page { display: none; }
+.page.visible { display: block; animation: pageIn 0.55s cubic-bezier(0.2, 0.7, 0.3, 1); }
+
+/* ---- About / home ---- */
+.hero { padding: 110px var(--pad-x) 90px; max-width: 1060px; }
+.eyebrow {
+  font: 500 13px var(--mono);
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  margin-bottom: 22px;
+}
+.hero h1 {
+  font: 400 clamp(42px, 7vw, 82px)/1.04 var(--serif);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.hero h1 em, .contact-hero h1 em { font-style: italic; color: var(--accent); }
+.hero .sub {
+  margin-top: 30px;
+  font: 400 18.5px/1.6 var(--sans);
+  color: var(--ink-mute);
+  max-width: 540px;
+}
+.hero-actions { display: flex; align-items: center; gap: 14px; margin-top: 42px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: 999px;
+  font: 500 14.5px var(--sans); cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  text-decoration: none;
+}
+.btn-dark { background: var(--ink); color: var(--bg); border: none; }
+.btn-dark:hover, .btn-dark:focus-visible { background: var(--accent); }
+.btn-ghost { background: transparent; border: 1px solid var(--chip-border); color: var(--ink); }
+.btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--ink); }
+.open-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-left: 10px;
+  font: 400 12.5px var(--mono); color: var(--ink-mute);
+}
+.open-pill .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+
+.about-block { padding: 40px var(--pad-x) 110px; max-width: 780px; }
+.about-block h2 { margin-bottom: 24px; font: 400 40px/1.15 var(--serif); letter-spacing: -0.01em; }
+.about-block p {
+  margin-bottom: 18px;
+  font: 400 17px/1.7 var(--sans);
+  color: var(--ink-soft);
+  max-width: 560px;
+}
+.facts {
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 10px 24px; margin-top: 34px;
+  font: 400 13px var(--mono);
+}
+.facts .k { color: var(--ink-faint); }
+.facts .v { color: var(--ink); }
+
+/* ---- CV ---- */
+.cv { padding: 90px var(--pad-x) 110px; max-width: 900px; }
+.cv-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.cv h1, .simple-page h1 { font: 400 clamp(40px, 6vw, 60px)/1.1 var(--serif); letter-spacing: -0.02em; }
+.btn-sm { padding: 12px 24px; font: 500 13.5px var(--sans); }
+.cv-section { margin-top: 70px; }
+.cv-section + .cv-section { margin-top: 24px; }
+.cv-label {
+  font: 500 13px var(--mono); color: var(--accent);
+  letter-spacing: 0.08em; margin-bottom: 28px;
+}
+.tl-item { display: grid; grid-template-columns: 26px 1fr; gap: 0 22px; }
+.tl-rail { display: flex; flex-direction: column; align-items: center; }
+.tl-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex-shrink: 0; }
+.tl-dot.hollow { background: var(--bg); border: 1.5px solid var(--accent); }
+.tl-line { width: 1px; flex: 1; background: var(--line); }
+.tl-body { padding-bottom: 44px; }
+.tl-title-row { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.tl-title-row h3 { font: 500 24px var(--serif); }
+.tl-date { font: 400 12.5px var(--mono); color: var(--ink-faint); }
+.tl-org { margin-top: 6px; font: 400 15px var(--sans); color: var(--ink-mute); }
+.tl-points { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.tl-points .pt {
+  display: flex; gap: 10px;
+  font: 400 15px/1.6 var(--sans);
+  color: var(--ink-soft); max-width: 580px;
+}
+.tl-points .pt::before { content: "—"; color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; max-width: 640px; }
+.chip {
+  padding: 8px 16px;
+  border: 1px solid var(--chip-border); border-radius: 999px;
+  font: 400 13px var(--mono); color: var(--ink-soft);
+}
+
+/* ---- Projects / Blog ---- */
+.simple-page { padding: 90px var(--pad-x) 110px; max-width: 1160px; }
+.simple-page .sub { margin-top: 18px; font: 400 17px/1.6 var(--sans); color: var(--ink-mute); max-width: 520px; }
+.placeholder {
+  margin-top: 56px; padding: 80px 40px;
+  border: 1.5px dashed var(--chip-border); border-radius: 16px;
+  text-align: center;
+}
+.placeholder .tag { font: 400 13px var(--mono); color: var(--ink-faint); }
+.placeholder p { margin: 14px auto 0; font: 400 22px var(--serif); color: var(--ink-mute); max-width: 420px; }
+
+/* ---- Contact ---- */
+.contact-hero { padding: 120px var(--pad-x) 110px; max-width: 1000px; }
+.contact-hero h1 { font: 400 clamp(44px, 6.5vw, 68px)/1.1 var(--serif); letter-spacing: -0.02em; text-wrap: balance; }
+.contact-hero .sub { margin-top: 26px; font: 400 17px/1.6 var(--sans); color: var(--ink-mute); max-width: 520px; }
+.email-link {
+  display: inline-block; margin-top: 48px;
+  font: 400 clamp(22px, 4vw, 34px) var(--serif);
+  color: var(--ink); text-decoration: none;
+  border-bottom: 2px solid var(--accent); padding-bottom: 4px;
+  transition: color 0.15s;
+  word-break: break-all;
+}
+.email-link:hover, .email-link:focus-visible { color: var(--accent); }
+.socials { display: flex; gap: 28px; margin-top: 56px; font: 400 13.5px var(--mono); }
+.socials a { color: var(--ink-soft); text-decoration: none; transition: color 0.15s; }
+.socials a:hover, .socials a:focus-visible { color: var(--accent); }
+
+/* ============ FOOTER ============ */
+footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+  padding: 26px var(--pad-x);
+  border-top: 1px solid var(--line-soft);
+  font: 400 12px var(--mono); color: var(--ink-faint);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 720px) {
+  :root { --pad-x: 24px; }
+  header { padding: 16px var(--pad-x); flex-wrap: wrap; gap: 12px; }
+  nav { gap: 18px; flex-wrap: wrap; }
+  .hero { padding-top: 70px; padding-bottom: 60px; }
+  .contact-hero { padding-top: 80px; }
+  .placeholder { padding: 56px 20px; }
+  .facts { grid-template-columns: auto 1fr; gap: 8px 16px; }
+}
+
+/* ============ ACCESSIBILITY ============ */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .page.visible { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ============ PRINT (Download CV) ============ */
+@media print {
+  #bg-canvas, header, footer, .page { display: none !important; }
+  #page-cv { display: block !important; animation: none; padding: 0; }
+  #page-cv .btn { display: none; }
+  body { background: #fff; }
+  .tl-body { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<div class="shell">
+
+<!-- ============ NAV ============ -->
+<header>
+  <button class="brand" data-go="about" aria-label="Home">tç<span class="dot">.</span></button>
+  <nav aria-label="Main navigation">
+    <a href="#about" data-nav="about">About</a>
+    <a href="#cv" data-nav="cv">CV</a>
+    <a href="#projects" data-nav="projects">Projects</a>
+    <a href="#blog" data-nav="blog">Blog</a>
+    <a href="#contact" data-nav="contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ ABOUT / HOME ============ -->
+<div class="page" id="page-about">
+  <section class="hero">
+    <div class="eyebrow">COMPUTER SCIENCE × ECONOMICS</div>
+    <h1>Talha Çelik turns ideas into <em>intelligent</em> systems.</h1>
+    <p class="sub">CS &amp; Economics student and AI enthusiast — exploring machine learning from models to the markets they move.</p>
+    <div class="hero-actions">
+      <a class="btn btn-dark" href="#projects">View projects →</a>
+      <button class="btn btn-ghost" onclick="window.print()">Download CV</button>
+      <span class="open-pill"><span class="pulse"></span>open to work &amp; collaborations</span>
+    </div>
+  </section>
+
+  <section class="about-block">
+    <h2>About</h2>
+    <p>I'm Talha. I'm 23 year old Computer Science &amp; Economics graduate interested in applying AI and automation to improve workflows and support data-driven decision making.</p>
+    <p>I'm experienced with Python, AI-agent research, and building practical solutions to real-world problems — and I enjoy translating technical ideas into simple tools that help teams work more efficiently.</p>
+    <div class="facts">
+      <span class="k">based_in</span><span class="v">Eindhoven, Netherlands</span>
+      <span class="k">studying</span><span class="v">MSc Data Science</span>
+      <span class="k">focus</span><span class="v">AI Agents · RAG pipelines · Automation</span>
+      <span class="k">currently</span><span class="v">Agentic AI Development at ASML</span>
+    </div>
+  </section>
+</div>
+
+<!-- ============ CV ============ -->
+<div class="page" id="page-cv">
+  <div class="cv">
+    <div class="cv-head">
+      <h1>Curriculum Vitae</h1>
+      <button class="btn btn-dark btn-sm" onclick="window.print()">Download PDF ↓</button>
+    </div>
+
+    <div class="cv-section">
+      <div class="cv-label">EDUCATION</div>
+      <div class="tl-item">
+        <div class="tl-rail"><span class="tl-dot"></span><span class="tl-line"></span></div>
+        <div class="tl-body">
+          <div class="tl-title-row"><h3>BSc Computer Science &amp; Economics</h3><span class="tl-date">2022 — 2026</span></div>
+          <div class="tl-org">Leiden University</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <div class="cv-label">EXPERIENCE</div>
+      <div class="tl-item">
+        <div class="tl-rail"><span class="tl-dot hollow"></span><span class="tl-line"></span></div>
+        <div class="tl-body">
+          <div class="tl-title-row"><h3>Agentic AI Intern — Business Analytics</h3><span class="tl-date">Sep 2026 — Feb 2027</span></div>
+          <div class="tl-org">ASML — Veldhoven, Netherlands</div>
+          <div class="tl-points">
+            <div class="pt"><span>Identify and validate agentic AI opportunities that remove repetitive tasks and support decision making in the Reuse &amp; Repair domain.</span></div>
+            <div class="pt"><span>Prototype and test AI agents using Copilot Studio, Agent Builder, and Python, translating user needs into clear agent requirements.</span></div>
+            <div class="pt"><span>Create onboarding materials, demos, and practical guidance, and track agent performance with data analysis tools.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-rail"><span class="tl-dot hollow"></span><span class="tl-line"></span></div>
+        <div class="tl-body">
+          <div class="tl-title-row"><h3>Integration Engineering Intern</h3><span class="tl-date">Feb 2026 — Jul 2026</span></div>
+          <div class="tl-org">Capgemini — Netherlands</div>
+          <div class="tl-points">
+            <div class="pt"><span>Contributed to enterprise system integration and migration projects.</span></div>
+            <div class="pt"><span>Researched intelligent AI agents for legacy-to-modern system transformation.</span></div>
+            <div class="pt"><span>Designed and implemented an intelligent agent with RAG solutions for automated schema mapping.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <div class="cv-label">SKILLS</div>
+      <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">AI Agents</span>
+        <span class="chip">RAG</span>
+        <span class="chip">SQL</span>
+        <span class="chip">Git</span>
+        <span class="chip">API</span>
+        <span class="chip">Azure</span>
+        <span class="chip">Copilot Studio</span>
+        <span class="chip">Agile</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PROJECTS ============ -->
+<div class="page" id="page-projects">
+  <div class="simple-page">
+    <h1>Projects</h1>
+    <p class="sub">Work at the intersection of AI, automation, and software.</p>
+    <div class="placeholder">
+      <div class="tag">// coming soon</div>
+      <p>This space is reserved for things I'm building.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ BLOG ============ -->
+<div class="page" id="page-blog">
+  <div class="simple-page">
+    <h1>Blog</h1>
+    <p class="sub">Notes on machine learning, economics, and things I break while learning.</p>
+    <div class="placeholder">
+      <div class="tag">// first post in progress</div>
+      <p>Writing takes longer than coding. Check back soon.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTACT ============ -->
+<div class="page" id="page-contact">
+  <div class="contact-hero">
+    <div class="eyebrow">CONTACT</div>
+    <h1>Let's build something that <em>thinks</em>.</h1>
+    <p class="sub">I'm open to work, research, and collaborations in AI and software. If you're building something interesting, my inbox is open.</p>
+    <a class="email-link" href="mailto:celikt2002@gmail.com">celikt2002@gmail.com</a>
+    <div class="socials">
+      <a href="https://github.com/talhac1k" target="_blank" rel="noopener">github ↗</a>
+      <a href="https://www.linkedin.com/in/talha-%C3%A7elik-608011233/" target="_blank" rel="noopener">linkedin ↗</a>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <span>© 2026 Talha Çelik</span>
+  <span>built with curiosity — eindhoven / anywhere</span>
+</footer>
+
+</div>
+
+<script>
+/* ============ HASH-BASED NAVIGATION ============ */
+(function () {
+  const pages = ['about', 'cv', 'projects', 'blog', 'contact'];
+
+  function show(page) {
+    if (!pages.includes(page)) page = 'about';
+    pages.forEach(p => {
+      document.getElementById('page-' + p).classList.toggle('visible', p === page);
+      document.querySelector('[data-nav="' + p + '"]').classList.toggle('active', p === page);
+    });
+    window.scrollTo(0, 0);
+  }
+
+  function fromHash() {
+    show((location.hash || '#about').slice(1));
+  }
+
+  window.addEventListener('hashchange', fromHash);
+  document.querySelector('.brand').addEventListener('click', () => { location.hash = 'about'; });
+  fromHash();
+})();
+
+/* ============ PARTICLE BACKGROUND ============ */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const canvas = document.getElementById('bg-canvas');
+  const DENSITY = 70;          // particle count
+  const CURSOR_LINKS = true;   // draw lines to cursor
+  let rafId, W, H, ctx, pts;
+
+  const mouse = { x: 0, y: 0, in: false };
+  document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; mouse.in = true; });
+  document.documentElement.addEventListener('mouseleave', () => { mouse.in = false; });
+
+  function init() {
+    cancelAnimationFrame(rafId);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    pts = [];
+    for (let i = 0; i < DENSITY; i++) {
+      pts.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+        r: 1.2 + Math.random() * 1.8
+      });
+    }
+    tick();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    for (const q of pts) {
+      q.x += q.vx; q.y += q.vy;
+      if (q.x < 0 || q.x > W) q.vx *= -1;
+      if (q.y < 0 || q.y > H) q.vy *= -1;
+      if (mouse.in) {
+        const dx = q.x - mouse.x, dy = q.y - mouse.y, d = Math.hypot(dx, dy);
+        if (d < 140 && d > 0.1) {
+          const f = (140 - d) / 140 * 0.6;
+          q.x += dx / d * f; q.y += dy / d * f;
+        }
+      }
+    }
+    ctx.lineWidth = 1;
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const a = pts[i], b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 130) {
+          ctx.strokeStyle = 'rgba(184,84,58,' + (0.14 * (1 - d / 130)).toFixed(3) + ')';
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+    }
+    if (CURSOR_LINKS && mouse.in) {
+      for (const q of pts) {
+        const d = Math.hypot(q.x - mouse.x, q.y - mouse.y);
+        if (d < 170) {
+          ctx.strokeStyle = 'rgba(31,29,26,' + (0.20 * (1 - d / 170)).toFixed(3) + ')';
+          ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+        }
+      }
+    }
+    for (const q of pts) {
+      ctx.fillStyle = 'rgba(107,102,96,0.5)';
+      ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, 7); ctx.fill();
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('resize', init);
+  init();
+})();
+</script>
+
+</body>
+</html>
